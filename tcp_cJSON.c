@@ -1,19 +1,27 @@
 /****************************************************************************
- * @author: Jordan396 <https://github.com/Jordan396/trivial-twitter-v2>     *
+ * @author: Jordan396 <https://github.com/Jordan396/tcp_cJSON>              *
  *                                                                          *
  *   You should have received a copy of the MIT License when cloning this   *
  *   repository. If not, see <https://opensource.org/licenses/MIT>.         *
  ****************************************************************************/
 
 /**
-  * @file ttweet_common.c
+  * @file tcp_cJSON.c
   * @author Jordan396
-  * @date 13 April 2019
-  * @brief Documentation for functions in ttweet_common.c.
+  * @date 18 April 2019
+  * @brief Source code for functions in tcp_cJSON.h.
   *
-  * This file contains functions common to both client and server in trivial twitter.
+  * The functions below are designed to facilitate transmission of JSON data over TCP.
   * 
-  * For an overview of what this program does, visit <https://github.com/Jordan396/trivial-twitter-v2>.
+  * Both sending and receiving parties must follow the same protocol, which is:
+  *   1. The sender first formats data as a cJSON string.
+  *   2. The sender then calls send_payload.
+  *   3. send_payload:
+  *     a. Sends the size of the payload within the first RCV_BUF_SIZE bytes.
+  *     b. It then sends the actual payload.
+  *   4. The receiver uses (3a) to determine when the sender has finished sending data.
+  * 
+  * Credits to the creators of the cJSON library <https://github.com/DaveGamble/cJSON>.
   * 
   * Code is documented according to GNOME and Doxygen standards.
   * <https://developer.gnome.org/programming-guidelines/stable/c-coding-style.html.en>
@@ -22,25 +30,11 @@
 
 #include "tcp_cJSON.h"
 
+int send_payload(int sock, cJSON *jobjToSend);
+void receive_response(int sock, char *objReceived);
 void die_with_error(char *errorMessage);
 int persist_with_error(char *errorMessage);
-int send_payload(int sock, cJSON *jobjToSend);
 void wait_for(unsigned int secs);
-void receive_response(int sock, char *objReceived);
-
-/** \copydoc die_with_error */
-void die_with_error(char *errorMessage)
-{
-  perror(errorMessage);
-  exit(1);
-}
-
-/** \copydoc persist_with_error */
-int persist_with_error(char *errorMessage)
-{
-  perror(errorMessage);
-  return 0;
-}
 
 /** \copydoc send_payload */
 int send_payload(int sock, cJSON *jobjToSend)
@@ -57,21 +51,13 @@ int send_payload(int sock, cJSON *jobjToSend)
   return 1;
 }
 
-/** \copydoc waitFor */
-void wait_for(unsigned int secs)
-{
-  unsigned int retTime = time(0) + secs; // Get finishing time.
-  while (time(0) < retTime)
-    ; // Loop until it arrives.
-}
-
 /** \copydoc receive_response */
 void receive_response(int sock, char *objReceived)
 {
   int bytesToRecv = 0;
   int responseIdx = 0;
-  char buffer[RCV_BUF_SIZE];   /* Buffer for ttweet string */
-  char response[MAX_RESP_LEN]; /* Stores the entire response */
+  char buffer[RCV_BUF_SIZE];    /* Buffer for ttweet string */
+  char response[MAX_RESP_SIZE]; /* Stores the entire response */
 
   while (bytesToRecv <= 0)
   {
@@ -97,4 +83,26 @@ void receive_response(int sock, char *objReceived)
     bytesToRecv -= RCV_BUF_SIZE;
   }
   strncpy(objReceived, response, sizeof(response));
+}
+
+/** \copydoc die_with_error */
+void die_with_error(char *errorMessage)
+{
+  perror(errorMessage);
+  exit(1);
+}
+
+/** \copydoc persist_with_error */
+int persist_with_error(char *errorMessage)
+{
+  perror(errorMessage);
+  return 0;
+}
+
+/** \copydoc waitFor */
+void wait_for(unsigned int secs)
+{
+  unsigned int retTime = time(0) + secs; // Get finishing time.
+  while (time(0) < retTime)
+    ; // Loop until it arrives.
 }
