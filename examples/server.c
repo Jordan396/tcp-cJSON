@@ -88,6 +88,8 @@ int main(int argc, char *argv[])
     printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
     handle_tcp_client(clntSock);
+
+    exit(1);
   }
   /* NOT REACHED */
 }

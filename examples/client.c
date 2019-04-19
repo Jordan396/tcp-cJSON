@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
   servIP = argv[1];         /* Server IP address (dotted quad) */
   servPort = atoi(argv[2]); /* Use given port, if any */
-  userNumber = argv[3];     /* Parse number */
+  userNumber = atoi(argv[3]);     /* Parse number */
   userMessage = argv[4];    /* Parse message */
 
   /* Create a reliable, stream socket using TCP */
