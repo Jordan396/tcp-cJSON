@@ -11,24 +11,16 @@
  ****************************************************************************/
 
 /**
-  * @file ttweetsrv.c
+  * @file server.c
   * @author Jordan396
   * @date 13 April 2019
-  * @brief ttweetser handles upload/download requests from ttweetcli clients.
+  * @brief server.c receives a JSON payload from a client and prints the request.
   *
-  * This file is to be compiled and executed on the server side. For an overview of 
-  * what this program does, visit <https://github.com/Jordan396/trivial-twitter-v2>.
+  * This file is to be compiled and executed on the server side.
   * 
   * Code is documented according to GNOME and Doxygen standards.
   * <https://developer.gnome.org/programming-guidelines/stable/c-coding-style.html.en>
   * <http://www.doxygen.nl/manual/docblocks.html>
-  * 
-  * ttweetsrc creates a persistent connection to a ttweetcli client. 
-  * A new child process is created for each connection via fork().
-  * The parent process ensures that only a maximum of MAX_CONC_CONN
-  * connections are running concurrently at any time.
-  * 
-
   */
 
 #include "server.h"
@@ -102,7 +94,7 @@ void handle_tcp_client(int clntSocket)
 
   cJSON *jobjReceived = cJSON_CreateObject();
   receive_response(clntSocket, objReceived);
-  printf("Raw response: %s\n", objReceived);
+  printf("Raw payload: %s\n", objReceived);
   jobjReceived = cJSON_Parse(objReceived);
   printf("userNumber: %d\n", cJSON_GetObjectItemCaseSensitive(jobjReceived, "userNumber")->valueint);
   printf("userMessage: %s\n", cJSON_GetObjectItemCaseSensitive(jobjReceived, "userMessage")->valuestring);

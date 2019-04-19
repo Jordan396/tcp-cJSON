@@ -14,7 +14,7 @@
   * @file client.c
   * @author Jordan396
   * @date 19 April 2019
-  * @brief client.c creates a persistent connection to a server.
+  * @brief client.c sends a JSON payload to a server.
   *
   * This file is to be compiled and executed on the client side.
   * 

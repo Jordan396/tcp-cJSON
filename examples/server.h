@@ -21,3 +21,11 @@
   */
 
 #include "../tcp_cJSON.h"
+
+/**
+ * @brief Creates a cJSON object and sends it to the server.
+ *
+ * @param clntSocket client socket.
+ * @return void
+ */
+void handle_tcp_client(int clntSocket);
