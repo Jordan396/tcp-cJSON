@@ -12,13 +12,17 @@ Starter template for transferring JSON data over TCP.
 ![Proposed TCP message format](img/proposed-tcp-message-format.png)
 
 ## Installation
-Download *cJSON.x* and *tcp_cJSON.x* directly, or clone this repository. Then, simply import *tcp_cJSON.h* into your project.
+Download *cJSON.x* and *tcp_cJSON.x* directly, or clone this repository. Then, import *tcp_cJSON.h* into your project.
 ```c
 #include <./tcp_cJSON.h>
 ```
 
 ## Usage
-Refer to *tcp_cJSON_example.x* for an example on how to use tcp_cJSON.
+A simple example on how to use tcp_cJSON can be found [here](./examples). 
+
+For a more complicated example, refer to this [project](https://github.com/Jordan396/trivial-twitter-v2).
+
+Refer to this [link](https://github.com/DaveGamble/cJSON) for instructions on how to use cJSON.
 
 ## License
 MIT License
