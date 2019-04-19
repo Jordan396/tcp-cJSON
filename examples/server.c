@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
   /* Create socket for incoming connections */
   if ((servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-    DieWithError("socket() failed");
+    die_with_error("socket() failed");
 
   /* Construct local address structure */
   memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
@@ -67,11 +67,11 @@ int main(int argc, char *argv[])
 
   /* Bind to the local address */
   if (bind(servSock, (struct sockaddr *)&echoServAddr, sizeof(echoServAddr)) < 0)
-    DieWithError("bind() failed");
+    die_with_error("bind() failed");
 
   /* Mark the socket so it will listen for incoming connections */
-  if (listen(servSock, MAXPENDING) < 0)
-    DieWithError("listen() failed");
+  if (listen(servSock, MAX_PENDING) < 0)
+    die_with_error("listen() failed");
 
   for (;;) /* Run forever */
   {
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     /* Wait for a client to connect */
     if ((clntSock = accept(servSock, (struct sockaddr *)&echoClntAddr,
                            &clntLen)) < 0)
-      DieWithError("accept() failed");
+      die_with_error("accept() failed");
 
     /* clntSock is connected to a client! */
 
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 /** \copydoc handle_tcp_client */
 void handle_tcp_client(int clntSocket)
 {
-  char objReceived[MAX_RESP_LEN]; /* String to store response */
+  char objReceived[MAX_RESP_SIZE]; /* String to store response */
   int recvMsgSize;                /* Size of received message */
 
   cJSON *jobjReceived = cJSON_CreateObject();
