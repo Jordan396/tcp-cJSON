@@ -7,7 +7,7 @@
 Starter template for transferring JSON data over TCP.
 
 ## Getting Started
-*Transmission Control Protocol* (TCP) is one of the main protocols in the transport layer of the internet protocol (IP). Unlike UDP, TCP does not preserve message boundaries. One solution is to use a **common message format** such as:
+*Transmission Control Protocol* (TCP) is one of the main protocols in the transport layer of the internet protocol (IP). Unlike UDP, TCP does not preserve message boundaries. In other words, the receiver cannot know when one message ends and another begins. One solution is to use a **common message format** such as:
 
 ![Proposed TCP message format](img/proposed-tcp-message-format.png)
 
