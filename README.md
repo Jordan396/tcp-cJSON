@@ -6,10 +6,14 @@
 
 Starter template for transferring JSON data over TCP.
 
+---
+
 ## Getting Started
 *Transmission Control Protocol* (TCP) is one of the main protocols in the transport layer of the internet protocol (IP). Unlike UDP, TCP does not preserve message boundaries. One solution is to use a **common message format** such as:
 
 ![Proposed TCP message format](img/proposed-tcp-message-format.png)
+
+---
 
 ## Installation
 Download *cJSON.x* and *tcp_cJSON.x* directly, or clone this repository. Then, import *tcp_cJSON.h* into your project.
@@ -17,12 +21,16 @@ Download *cJSON.x* and *tcp_cJSON.x* directly, or clone this repository. Then, i
 #include <./tcp_cJSON.h>
 ```
 
+---
+
 ## Usage
 A simple example on how to use tcp_cJSON can be found [here](./examples). 
 
 For a more complicated example, refer to this [project](https://github.com/Jordan396/trivial-twitter-v2).
 
 Refer to this [link](https://github.com/DaveGamble/cJSON) for instructions on how to use cJSON.
+
+---
 
 ## License
 MIT License
